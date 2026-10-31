@@ -1,0 +1,27 @@
+<div>
+  <button (click)="selectedLab = 3">Лабораторна робота №3</button>
+  <button (click)="selectedLab = 4">Лабораторна робота №4</button>
+  <button (click)="selectedLab = 5">Лабораторна робота №5</button>
+</div>
+
+<div *ngIf="selectedLab === 3">
+  <app-lab-3></app-lab-3>
+</div>
+
+<div *ngIf="selectedLab === 4">
+  <h2>Лабораторна робота №4</h2>
+  <label for="numInput">Введіть числа через кому: </label>
+  <br />
+  <input 
+    id="numInput"
+    type="text" 
+    [(ngModel)]="inputText" 
+    placeholder="0, 1,..." 
+    style="width: 300px;"
+  />
+  <app-lab-4 [numbers]="parsedNumbers"></app-lab-4>
+</div>
+
+<div *ngIf="selectedLab === 5">
+  <app-lab-5></app-lab-5>
+</div>

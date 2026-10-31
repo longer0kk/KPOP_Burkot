@@ -1,0 +1,15 @@
+<h2>Лабораторна робота №3</h2>
+<p>Відображення рядка у зворотному порядку</p>
+
+<label for="strInput">Введіть рядок: </label>
+<input 
+  id="strInput"
+  type="text" 
+  [(ngModel)]="userText" 
+  placeholder="Введіть текст..."
+/>
+
+<div style="overflow-wrap: break-word;">
+  <p><strong>Оригінальний рядок:</strong> {{ userText }}</p>
+  <p><strong>У зворотному порядку:</strong> {{ reversedText }}</p>
+</div>

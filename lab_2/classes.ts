@@ -13,11 +13,23 @@ export class UniversityLibrarian implements Librarian {
 
 // 2.5, 2.7
 export abstract class ReferenceItem {
-  // 2.5.5
-  static department: string = "Науково-технічна література";
+    // --- 2.5.1 (Закоментовано по пункту 2.5.3) ---
+    /*
+    title: string;
+    year: number;
+
+  constructor(newTitle: string, newYear: number) {
+    console.log("Creating a new ReferenceItem ...");
+    this.title = newTitle;
+    this.year = newYear;
+  }
+  */
 
   // 2.5.4
   private _publisher: string = "";
+
+  // 2.5.5
+  static department: string = "Classical Literature";
 
   // 2.5.3
   constructor(public title: string, protected year: number) {

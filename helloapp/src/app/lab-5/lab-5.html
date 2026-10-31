@@ -1,0 +1,52 @@
+<h2>Лабораторна робота №5</h2>
+
+<div style="margin-bottom: 15px;">
+  <button (click)="view = 'table'">Таблиця персонажів</button>
+  <button (click)="view = 'favorites'">Обрані персонажі ({{ favoritesList.length }})</button>
+</div>
+
+<div *ngIf="view === 'table'">
+  <p *ngIf="characters.length === 0">Завантаження персонажів...</p>
+
+  <table *ngIf="characters.length > 0" border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Ім'я</th>
+        <th>Стать</th>
+        <th>Вид / Раса</th>
+        <th>Рік народження</th>
+        <th>Дія</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let char of characters" (click)="selectedCharacter = char" style="cursor: pointer;">
+        <td>{{ char.name }}</td>
+        <td>{{ char.gender }}</td>
+        <td>{{ char.speciesName }}</td>
+        <td>{{ char.birth_year }}</td>
+        <td><button (click)="addToFavorites(char, $event)">В обране</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div 
+    *ngIf="selectedCharacter" 
+    style="position: fixed; top: 20%; left: 30%; background: white; border: 2px solid black; padding: 15px; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);"
+  >
+    <h3>Детальна інформація: {{ selectedCharacter.name }}</h3>
+    <p><strong>Раса:</strong> {{ selectedCharacter.speciesName }}</p>
+    <p><strong>Зріст:</strong> {{ selectedCharacter.height }} см</p>
+    <p><strong>Вага:</strong> {{ selectedCharacter.mass }} кг</p>
+    <p><strong>Колір очей:</strong> {{ selectedCharacter.eye_color }}</p>
+    <p><strong>Колір шкіри:</strong> {{ selectedCharacter.skin_color }}</p>
+    <p><strong>Рік народження:</strong> {{ selectedCharacter.birth_year }}</p>
+    <button (click)="selectedCharacter = null">Закрити</button>
+  </div>
+</div>
+
+<div *ngIf="view === 'favorites'">
+  <app-favorites 
+    [items]="favoritesList" 
+    (remove)="removeFromFavorites($event)">
+  </app-favorites>
+</div>
