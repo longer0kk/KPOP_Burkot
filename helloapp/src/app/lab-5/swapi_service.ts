@@ -6,11 +6,17 @@ import axios from 'axios';
 })
 export class SwapiService {
   private static apiUrl = 'https://swapi.dev/api/people/';
+  private static pagesToFetch = [1, 2, 3, 4];
 
   async getCharacters(): Promise<any[]> {
     try {
-      const response = await axios.get(SwapiService.apiUrl);
-      const people = response.data.results || [];
+      const pageResponses = await Promise.all(
+        SwapiService.pagesToFetch.map(page =>
+          axios.get(`${SwapiService.apiUrl}?page=${page}`)
+        )
+      );
+
+      const people = pageResponses.flatMap(res => res?.data?.results || []);
 
       const enrichedPeople = await Promise.all(
         people.map(async (char: any) => {

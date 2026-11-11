@@ -49,34 +49,41 @@ export class Lab6 implements OnInit {
     const canvas = document.getElementById('genderChart') as HTMLCanvasElement;
     if (!canvas || this.characters.length === 0) return;
 
-    if (this.chart) {
-      this.chart.destroy();
-      this.chart = null;
-    }
+    this.chart?.destroy();
+    this.chart = null;
 
-    const males = this.characters.filter(c => c.gender === 'male').length;
-    const females = this.characters.filter(c => c.gender === 'female').length;
-    const others = this.characters.length - males - females;
-
-    this.chart = new Chart(canvas, {
-      type: 'pie',
-      data: {
-        labels: ['Чоловіча стать', 'Жіноча стать', 'Не визначені / Інші'],
-        datasets: [{
-          data: [males, females, others],
-          backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Розподіл персонажів за статтю'
-          }
-        }
-      }
+    const counts: Record<string, number> = {};
+    this.characters.forEach(c => {
+      const sp = c.speciesName || 'Unknown';
+      counts[sp] = (counts[sp] || 0) + 1;
     });
+
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const top = sorted.slice(0, 4);
+    const other = sorted.slice(4).reduce((sum, [, v]) => sum + v, 0);
+
+    const labels = [...top.map(([k]) => k), ...(other > 0 ? ['Інше'] : [])];
+    const data = [...top.map(([, v]) => v), ...(other > 0 ? [other] : [])];
+    const palette = ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF'];
+
+    if (typeof canvas.getContext === 'function') {
+      try {
+        this.chart = new Chart(canvas, {
+          type: 'pie',
+          data: {
+            labels,
+            datasets: [{ data, backgroundColor: palette.slice(0, labels.length) }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: true, position: 'top' },
+              title: { display: true, text: 'Розподіл персонажів за расою' }
+            }
+          }
+        });
+      } catch {}
+    }
   }
 
   async addToFavorites(char: any, event: MouseEvent): Promise<void> {
