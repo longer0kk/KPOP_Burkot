@@ -5,11 +5,12 @@ import { Lab3 } from './lab-3/lab-3';
 import { Lab4 } from './lab-4/lab-4';
 import { Lab5 } from './lab-5/lab-5';
 import { Lab6 } from './lab-6/lab-6';
+import { Lab8 } from './lab-8/lab-8';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, Lab3, Lab4, Lab5, Lab6],
+  imports: [CommonModule, FormsModule, Lab3, Lab4, Lab5, Lab6, Lab8],
   templateUrl: './app.html'
 })
 

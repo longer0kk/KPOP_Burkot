@@ -1,0 +1,41 @@
+<hr />
+<h3>Вибрані персонажі</h3>
+
+<p *ngIf="items.length === 0">Поки що жодного персонажа не додано у вибране.</p>
+
+<table *ngIf="items.length > 0" border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Ім'я</th>
+      <th>Стать</th>
+      <th>Вид / Раса</th>
+      <th>Рік народження</th>
+      <th>Дія</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let char of items" (click)="selectedFav = char" style="cursor: pointer;">
+      <td>{{ char.name }}</td>
+      <td>{{ char.gender }}</td>
+      <td>{{ char.speciesName }}</td>
+      <td>{{ char.birth_year }}</td>
+      <td>
+        <button (click)="onRemove(char, $event)">Видалити</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div 
+  *ngIf="selectedFav" 
+  style="position: fixed; top: 20%; left: 30%; background: white; border: 2px solid black; padding: 15px; box-shadow: 5px 5px 15px rgba(0,0,0,0.3); z-index: 1000;"
+>
+  <h3>Детальна інформація: {{ selectedFav.name }}</h3>
+  <p><strong>Раса:</strong> {{ selectedFav.speciesName }}</p>
+  <p><strong>Зріст:</strong> {{ selectedFav.height }} см</p>
+  <p><strong>Вага:</strong> {{ selectedFav.mass }} кг</p>
+  <p><strong>Колір очей:</strong> {{ selectedFav.eye_color }}</p>
+  <p><strong>Колір шкіри:</strong> {{ selectedFav.skin_color }}</p>
+  <p><strong>Рік народження:</strong> {{ selectedFav.birth_year }}</p>
+  <button (click)="selectedFav = null">Закрити</button>
+</div>

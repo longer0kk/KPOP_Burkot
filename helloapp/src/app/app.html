@@ -3,6 +3,7 @@
   <button (click)="selectedLab = 4">Лабораторна робота №4</button>
   <button (click)="selectedLab = 5">Лабораторна робота №5</button>
   <button (click)="selectedLab = 6">Лабораторна робота №6</button>
+  <button (click)="selectedLab = 8">Лабораторна робота №8</button>
 </div>
 
 <div *ngIf="selectedLab === 3">
@@ -29,4 +30,8 @@
 
 <div *ngIf="selectedLab === 6">
   <app-lab-6></app-lab-6>
+</div>
+
+<div *ngIf="selectedLab === 8">
+  <app-lab-8></app-lab-8>
 </div>
